@@ -1,18 +1,11 @@
 import React from 'react';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Chip from '@material-ui/core/Chip';
 
 const defaultProduct = {
   _id: '',
@@ -24,7 +17,7 @@ const defaultProduct = {
   countries_tags: [],
   data_sources_tags: [],
   image_url: '',
-  ingridients: [
+  ingredients: [
     {
       id: 'en:something',
       percent_min: 0,
@@ -34,8 +27,8 @@ const defaultProduct = {
       rank: 1
     },
   ],
-  ingridients_analysis_tags: [],
-  ingridients_tags: [],
+  ingredients_analysis_tags: [],
+  ingredients_tags: [],
   labels_tags: [],
   nutriments: {
     
@@ -48,11 +41,12 @@ const defaultProduct = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
+    maxWidth: '60%',
+    margin: '0 auto'
   },
   media: {
     height: 0,
-    paddingTop: '80%', // 16:9
+    paddingTop: '40%',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -64,18 +58,16 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: red[500],
+  entryText: {
+    display: 'block'
   },
+  chipSpacing: {
+    marginRight: '1em'
+  }
 }));
 
 export default function ProductDetails({ details = defaultProduct }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Card className={classes.root} variant='outlined'>
@@ -90,55 +82,70 @@ export default function ProductDetails({ details = defaultProduct }) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          <b>Nutriments:</b>
+          {
+            Object.keys(details.nutriments).map((nutrimentKey) => (
+            <span className={classes.entryText}>{nutrimentKey.replace(/_/g, ' ').replace(/-/g, ' ')}: {details.nutriments[nutrimentKey]}</span>
+            ))
+          }
         </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Nutriscore data:</b>
+          {
+            Object.keys(details.nutriscore_data).map((nutrimentKey) => (
+              <span className={classes.entryText}>{nutrimentKey.replace(/_/g, ' ').replace(/-/g, ' ')}: {details.nutriscore_data[nutrimentKey]}</span>
+            ))
+          }
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Ingredients:</b>
+          {
+            details.ingredients.map((ingredient) => (
+              <span className={classes.entryText}>{ingredient.id.substring(3)}, max {ingredient.percent_max.toFixed(2)}%, vegeratian: {ingredient.vegetarian || 'no'}, vegan: {ingredient.vegan || 'no'}</span>
+            ))
+          }
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Vitamins:</b>
+        </Typography>
+        {
+          details.vitamins_tags.length > 0 ? details.vitamins_tags.map((vitamin) => (
+            <Chip variant='outlined' className={classes.chipSpacing} label={vitamin.substring(3)}></Chip>
+          )) : <Chip label='Unknown'></Chip>
+        }
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Ingredients analysis:</b>
+        </Typography>
+        {
+          details.ingredients_analysis_tags.length > 0 ? details.ingredients_analysis_tags.map((element) => (
+            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          )) : <Chip label='Unknown'></Chip>
+        }
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Amino acids:</b>
+        </Typography>
+        {
+          details.amino_acids_tags.length > 0 ? details.amino_acids_tags.map((element) => (
+            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          )) : <Chip label='Unknown'></Chip>
+        }
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Data sources:</b>
+        </Typography>
+        {
+          details.data_sources_tags.length > 0 ? details.data_sources_tags.map((element) => (
+            <Chip variant='outlined' className={classes.chipSpacing} label={element}></Chip>
+          )) : <Chip label='Unknown'></Chip>
+        }
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Available in:</b>
+        </Typography>
+        {
+          details.countries_tags.length > 0 ? details.countries_tags.map((element) => (
+            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          )) : <Chip label='Unknown'></Chip>
+        }
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }
