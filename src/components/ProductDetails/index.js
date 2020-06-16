@@ -78,33 +78,36 @@ export default function ProductDetails({ details = defaultProduct }) {
         title={details.brands}
         subheader={details.code}
       />
-      <CardMedia
+      { details.image_url && <CardMedia
         className={classes.media}
         image={details.image_url}
         title="Product image"
-      />
+            />
+      }
       <CardContent>
         <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Nutriments:</b>
           {
             Object.keys(details.nutriments).map((nutrimentKey) => (
-            <span className={classes.entryText}>{nutrimentKey.replace(/_/g, ' ').replace(/-/g, ' ')}: {details.nutriments[nutrimentKey]}</span>
+            <span key={nutrimentKey} className={classes.entryText}>{nutrimentKey.replace(/_/g, ' ').replace(/-/g, ' ')}: {details.nutriments[nutrimentKey]}</span>
             ))
           }
         </Typography>
-        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
-          <b>Nutriscore data:</b>
-          {
-            Object.keys(details.nutriscore_data).map((nutrimentKey) => (
-              <span className={classes.entryText}>{nutrimentKey.replace(/_/g, ' ').replace(/-/g, ' ')}: {details.nutriscore_data[nutrimentKey]}</span>
-            ))
-          }
-        </Typography>
+        { 
+          details.nutriscore_data && <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p"> 
+            <b>Nutriscore data:</b>
+            {
+              Object.keys(details.nutriscore_data).map((nutrimentKey) => (
+                <span key={nutrimentKey} className={classes.entryText}>{nutrimentKey.replace(/_/g, ' ').replace(/-/g, ' ')}: {details.nutriscore_data[nutrimentKey]}</span>
+              ))
+            }
+          </Typography>
+        }
         <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Ingredients:</b>
           {
             details.ingredients.map((ingredient) => (
-              <span className={classes.entryText}>{ingredient.id.substring(3)}, max {ingredient.percent_max.toFixed(2)}%, vegeratian: {ingredient.vegetarian || 'no'}, vegan: {ingredient.vegan || 'no'}</span>
+              <span key={ingredient} className={classes.entryText}>{ingredient.id.substring(3)}, max {ingredient.percent_max.toFixed(2)}%, vegeratian: {ingredient.vegetarian || 'no'}, vegan: {ingredient.vegan || 'no'}</span>
             ))
           }
         </Typography>
@@ -112,48 +115,48 @@ export default function ProductDetails({ details = defaultProduct }) {
           <b>Vitamins:</b>
         </Typography>
         {
-          details.vitamins_tags.length > 0 ? details.vitamins_tags.map((vitamin) => (
-            <Chip variant='outlined' className={classes.chipSpacing} label={vitamin.substring(3)}></Chip>
+          details.vitamins_tags && details.vitamins_tags.length > 0 ? details.vitamins_tags.map((vitamin) => (
+            <Chip key={vitamin} variant='outlined' className={classes.chipSpacing} label={vitamin.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
         <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Ingredients analysis:</b>
         </Typography>
         {
-          details.ingredients_analysis_tags.length > 0 ? details.ingredients_analysis_tags.map((element) => (
-            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          details.ingredients_analysis_tags && details.ingredients_analysis_tags.length > 0 ? details.ingredients_analysis_tags.map((element) => (
+            <Chip key={element} variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
         <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Allergens:</b>
         </Typography>
         {
-          details.allergens_tags.length > 0 ? details.allergens_tags.map((element) => (
-            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          details.allergens_tags && details.allergens_tags.length > 0 ? details.allergens_tags.map((element) => (
+            <Chip key={element} variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
         <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Amino acids:</b>
         </Typography>
         {
-          details.amino_acids_tags.length > 0 ? details.amino_acids_tags.map((element) => (
-            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          details.amino_acids_tags && details.amino_acids_tags.length > 0 ? details.amino_acids_tags.map((element) => (
+            <Chip key={element} variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
         <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Data sources:</b>
         </Typography>
         {
-          details.data_sources_tags.length > 0 ? details.data_sources_tags.map((element) => (
-            <Chip variant='outlined' className={classes.chipSpacing} label={element}></Chip>
+          details.data_sources_tags && details.data_sources_tags.length > 0 ? details.data_sources_tags.map((element) => (
+            <Chip key={element} variant='outlined' className={classes.chipSpacing} label={element}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
         <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Available in:</b>
         </Typography>
         {
-          details.countries_tags.length > 0 ? details.countries_tags.map((element) => (
-            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          details.countries_tags && details.countries_tags.length > 0 ? details.countries_tags.map((element) => (
+            <Chip key={element} variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
       </CardContent>
