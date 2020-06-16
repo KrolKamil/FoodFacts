@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getProduct, getCategory } from "./api";
+import ProductDetails from './components/ProductDetails';
 
 const validCategory = async () => {
   try {
@@ -23,6 +24,8 @@ const validProduct = async () => {
     const response = await getProduct("8430807014887");
     console.log("Im valid product response:");
     console.log(response);
+    console.debug({ response });
+    return response;
   } catch (e) {}
 };
 
@@ -35,14 +38,18 @@ const invalidProduct = async () => {
 };
 
 function App() {
+  const [product, setProduct] = useState();
+
+
+
   useEffect(() => {
-    validCategory();
-    invalidCategory();
-    validProduct();
-    invalidProduct();
+    // validCategory();
+    // invalidCategory();
+    validProduct().then((details) => setProduct(details.product));
+    // invalidProduct();
   }, []);
 
-  return <>Hello World</>;
+  return <ProductDetails details={product} />;
 }
 
 export default App;
