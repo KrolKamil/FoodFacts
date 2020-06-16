@@ -63,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
   },
   chipSpacing: {
     marginRight: '1em'
+  },
+  sectionsSpacing: {
+    marginTop: 14
   }
 }));
 
@@ -81,7 +84,7 @@ export default function ProductDetails({ details = defaultProduct }) {
         title="Product image"
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Nutriments:</b>
           {
             Object.keys(details.nutriments).map((nutrimentKey) => (
@@ -89,7 +92,7 @@ export default function ProductDetails({ details = defaultProduct }) {
             ))
           }
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Nutriscore data:</b>
           {
             Object.keys(details.nutriscore_data).map((nutrimentKey) => (
@@ -97,7 +100,7 @@ export default function ProductDetails({ details = defaultProduct }) {
             ))
           }
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Ingredients:</b>
           {
             details.ingredients.map((ingredient) => (
@@ -105,7 +108,7 @@ export default function ProductDetails({ details = defaultProduct }) {
             ))
           }
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Vitamins:</b>
         </Typography>
         {
@@ -113,7 +116,7 @@ export default function ProductDetails({ details = defaultProduct }) {
             <Chip variant='outlined' className={classes.chipSpacing} label={vitamin.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Ingredients analysis:</b>
         </Typography>
         {
@@ -121,7 +124,15 @@ export default function ProductDetails({ details = defaultProduct }) {
             <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
+          <b>Allergens:</b>
+        </Typography>
+        {
+          details.allergens_tags.length > 0 ? details.allergens_tags.map((element) => (
+            <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
+          )) : <Chip label='Unknown'></Chip>
+        }
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Amino acids:</b>
         </Typography>
         {
@@ -129,7 +140,7 @@ export default function ProductDetails({ details = defaultProduct }) {
             <Chip variant='outlined' className={classes.chipSpacing} label={element.substring(3)}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Data sources:</b>
         </Typography>
         {
@@ -137,7 +148,7 @@ export default function ProductDetails({ details = defaultProduct }) {
             <Chip variant='outlined' className={classes.chipSpacing} label={element}></Chip>
           )) : <Chip label='Unknown'></Chip>
         }
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.sectionsSpacing} variant="body2" color="textSecondary" component="p">
           <b>Available in:</b>
         </Typography>
         {
