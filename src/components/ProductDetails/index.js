@@ -107,7 +107,7 @@ export default function ProductDetails({ details = defaultProduct }) {
           <b>Ingredients:</b>
           {
             details.ingredients.map((ingredient) => (
-              <span key={ingredient} className={classes.entryText}>{ingredient.id.substring(3)}, max {ingredient.percent_max.toFixed(2)}%, vegeratian: {ingredient.vegetarian || 'no'}, vegan: {ingredient.vegan || 'no'}</span>
+              <span key={ingredient.id} className={classes.entryText}>{ingredient.id.substring(3)}, max {ingredient.percent_max.toFixed(2)}%, vegeratian: {ingredient.vegetarian || 'no'}, vegan: {ingredient.vegan || 'no'}</span>
             ))
           }
         </Typography>
